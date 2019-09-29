@@ -1,0 +1,79 @@
+# Denarius - Snapcraft Build - Known to build in most Ubuntu versions - WIP Currently as of Denarius v3.3.9.3
+# https://denarius.io
+# https://github.com/carsenk/denarius
+# By Carsen Klock
+name: denarius
+version: 'master'
+summary: Denarius
+description: |
+  An open source hybrid cryptocurrency called Denarius, which features Fortuna Stakes (Masternodes), Staking, Mining, Multisig, and much more!
+grade: devel
+confinement: strict
+ 
+apps:
+  denarius:
+    command: desktop-launch $SNAP/bin/Denarius
+    plugs: [home, network, network-bind, unity7]
+    desktop: denarius.desktop
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+ 
+parts:
+  denarius:
+    source: https://github.com/carsenk/denarius.git
+    source-type: git
+    source-tag: master
+    plugin: qmake
+    qt-version: qt5
+    build-packages:
+      - g++
+      - jq
+      - wget
+      - unzip
+      - curl
+      - build-essential
+      - apt-transport-https
+      - zlib1g-dev
+      - libdb++-dev
+      - libboost-all-dev
+      - libqrencode-dev
+      - libminiupnpc-dev
+      - libevent-dev
+      - libssl-dev
+      - libtool
+      - libqt5gui5
+      - libqt5core5a
+      - libqt5dbus5
+      - qttools5-dev
+      - qttools5-dev-tools
+      - qt5-default
+      - qtbase5-dev-tools
+    stage-packages:
+      - g++
+      - jq
+      - wget
+      - unzip
+      - curl
+      - build-essential
+      - apt-transport-https
+      - zlib1g-dev
+      - libdb++-dev
+      - libboost-all-dev
+      - libqrencode-dev
+      - libminiupnpc-dev
+      - libevent-dev
+      - libssl-dev
+      - libtool
+      - libqt5gui5
+      - libqt5core5a
+      - libqt5dbus5
+      - qttools5-dev
+      - qttools5-dev-tools
+      - qt5-default
+      - qtbase5-dev-tools
+    install: |
+        cp Denarius $SNAPCRAFT_PART_INSTALL/bin
+    after: [desktop-qt5]
+  desktop:
+    source: snap/gui
+    plugin: dump
